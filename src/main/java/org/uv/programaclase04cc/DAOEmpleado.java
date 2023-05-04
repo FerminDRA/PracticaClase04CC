@@ -21,10 +21,8 @@ public class DAOEmpleado implements IDAOGeneral<Empleado, Integer>{
         TransactionDB tbd=new TransactionDB<Empleado>(p) {
             @Override
             public boolean execute(Connection con) {
-                try {
-                    String sql="insert into empleado(clave, nombre, direccion, telefono)"
-                            + "values (?,?,?,?)";
-                    PreparedStatement psm= con.prepareStatement(sql);
+                try(PreparedStatement psm=con.prepareStatement("insert into empleado(clave, nombre, direccion, telefono)"
+                            + "values (?,?,?,?)")) {
                     psm.setInt(1, p.getClave());
                     psm.setString(2, p.getNombre());
                     psm.setString(3, p.getDireccion());
@@ -55,9 +53,7 @@ public class DAOEmpleado implements IDAOGeneral<Empleado, Integer>{
         TransactionDB tbd=new TransactionDB<Integer>(id) {
             @Override
             public boolean execute(Connection con) {
-                try {
-                    String sql="delete from empleado where clave=?";
-                    PreparedStatement psm= con.prepareStatement(sql);
+                try (PreparedStatement psm= con.prepareStatement("delete from empleado where clave=?")){                    
                     psm.setInt(1, id);
                     psm.execute();
                     return true;
@@ -86,9 +82,7 @@ public class DAOEmpleado implements IDAOGeneral<Empleado, Integer>{
         TransactionDB tbd=new TransactionDB<Empleado>(p) {
             @Override
             public boolean execute(Connection con) {
-                try {
-                    String sql="update empleado set nombre=?, direccion=?, telefono=? where clave=?";
-                    PreparedStatement psm= con.prepareStatement(sql);
+                try(PreparedStatement psm= con.prepareStatement("update empleado set nombre=?, direccion=?, telefono=? where clave=?")) {
                     psm.setString(1, p.getNombre());
                     psm.setString(2, p.getDireccion());
                     psm.setString(3, p.getTelefono());
@@ -122,12 +116,10 @@ public class DAOEmpleado implements IDAOGeneral<Empleado, Integer>{
         TransactionDB tbd=new TransactionDB<List<Empleado>>(empleados) {
             @Override
             public boolean execute(Connection con) {
-                try {
+                try(PreparedStatement psm= con.prepareStatement("select * from empleado")) {
                     List<Empleado> empleados= new ArrayList<>();
                     ResultSet rs=null;
                     Empleado emp;
-                    String sql="select * from empleado";
-                    PreparedStatement psm= con.prepareStatement(sql);
                     rs=psm.executeQuery();
                     
                     
@@ -168,13 +160,10 @@ public class DAOEmpleado implements IDAOGeneral<Empleado, Integer>{
         TransactionDB tbd=new TransactionDB<Empleado>(p) {
             @Override
             public boolean execute(Connection con) {
-                try {
+                try(PreparedStatement psm= con.prepareStatement("select * from empleado where clave=?")) {
                     Empleado emp=new Empleado();
                     //
                     ResultSet rs=null;
-                    
-                    String sql="select * from empleado where clave=?";
-                    PreparedStatement psm= con.prepareStatement(sql);
                     psm.setInt(1, id);
                     rs=psm.executeQuery();
                     

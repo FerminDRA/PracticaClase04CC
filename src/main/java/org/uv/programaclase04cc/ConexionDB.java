@@ -34,7 +34,7 @@ public class ConexionDB {
         
     }
     
-    public boolean execute(String sql){
+    public boolean execute(){
         return true;
     }
     

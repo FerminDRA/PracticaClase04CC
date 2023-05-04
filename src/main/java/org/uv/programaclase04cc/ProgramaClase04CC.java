@@ -4,6 +4,9 @@
 
 package org.uv.programaclase04cc;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author fermin
@@ -11,8 +14,9 @@ package org.uv.programaclase04cc;
 public class ProgramaClase04CC {
 
     public static void main(String[] args) {
-        //Create
+        
         DAOEmpleado dao=new DAOEmpleado();
+/**       Create
 //        Empleado emp= new Empleado();
 //        emp.setClave(3);
 //        emp.setNombre("Fermin");
@@ -38,7 +42,8 @@ public class ProgramaClase04CC {
 //        
         //Find by Id
         //dao.findById(2);
+**/
         Empleado em=dao.findById(3);
-        System.out.println(em.getNombre());
+        Logger.getLogger(ProgramaClase04CC.class.getName()).log(Level.SEVERE, em.getNombre());
     }
 }
